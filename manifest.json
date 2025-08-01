@@ -63,7 +63,7 @@
   "Superuser.apk":"/system/app/"
   "BackupRestoreConfirmation.apk":"/system/priv-app/BackupRestoreConfirmation",
   "CalendarProvider.apk":"/system/priv-app/CalendarProvider",
-  "CDS_INFO.apk:"/system/priv-app/CDS_INFO",
+  "CDS_INFO.apk":"/system/priv-app/CDS_INFO",
   "Contacts.apk":"/system/priv-app/Contacts",
   "ContactsProvider.apk":"/system/priv-app/ContactsProvider",
   "DefaultContainerService.apk":"/system/priv-app/DefaultContainerService",
