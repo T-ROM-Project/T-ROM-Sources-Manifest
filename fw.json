@@ -20,4 +20,9 @@
   "framework2.zip": "/system/framework",
   "framework3.zip": "/system/framework",
   "framework4.zip": "/system/framework/arm",
+  "media1.zip": "/system/media",
+  "media2.zip": "/system/media",
+  "lib4.zip": "/system/lib",
+  "vendor3.zip": "/system/vendor",
+  "etc3.zip": "/system/etc"
 }
