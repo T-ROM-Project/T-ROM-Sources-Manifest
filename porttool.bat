@@ -17,16 +17,13 @@ cls
 echo Deleting Python Installer resources...
 del "%PYTHON_EXE%" >nul 2>&1
 
-:: Hier restart.txt erstellen
-echo 1 > "%~dp0restart.txt"
-
 timeout /t 3 >nul
 for /f "tokens=2*" %%A in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path ^| find "Path"') do set "PATH=%%B"
 cls
-echo Continue...
 timeout /t 3 >nul
 :installedpython
 cls
 echo Python is installed.
 timeout /t 3 >nul
 CALL "%SCRIPTS%\dlhelper.bat"
+
