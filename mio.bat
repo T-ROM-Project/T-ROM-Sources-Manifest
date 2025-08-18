@@ -1,5 +1,23 @@
 :: T-ROM Project (palutenfan123) 2025 (Please do not delete this !! , Thanks  : ) )
 @echo off
+set /p CHOICE="Do you want to exclude Mio Kitchen folders from Windows Defender? (Y/N): "
+
+if /i "%CHOICE%"=="Y" (
+    cls
+    echo Adding Defender exclusions...
+
+    powershell.exe -NoLogo -NoProfile -Command ^
+        "Start-Process powershell.exe -ArgumentList 'Add-MpPreference -ExclusionPath \"\"%KITCHEN%\"\"; Add-MpPreference -ExclusionPath \"\"%FILETEMP%\"\"' -Verb RunAs -Wait"
+
+    echo.
+    echo Exclusions added successfully 
+) else (
+    cls
+    echo Operation canceled by user.
+    timeout /t 2 >nul
+    goto exit
+)
+
 cls
 echo done 
 timeout /t 2 >nul
@@ -21,6 +39,8 @@ pip install -r requirements.txt
 echo Done 
 timeout /t 2 >nul
 echo Starting Multi Android Kitchen ...
-python tool.py
-
+cd %ROOT%
+start "" "%KITCHEN%\tool.exe"
+:exit 
+echo.
 
