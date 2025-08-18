@@ -1,12 +1,5 @@
 :: T-ROM Project (palutenfan123) 2025 (Please do not delete this !! , Thanks  : ) )
 @echo off
-echo Setting Windows Defender up ...
-powershell.exe -NoLogo -NoProfile -WindowStyle Hidden -Command ^
-    "Start-Process powershell.exe -ArgumentList 'Add-MpPreference -ExclusionPath \"%KITCHEN%"' -Verb RunAs"
-
-powershell.exe -NoLogo -NoProfile -WindowStyle Hidden -Command ^
-    "Start-Process powershell.exe -ArgumentList 'Add-MpPreference -ExclusionPath \"%FILETEMP%"' -Verb RunAs"
-
 cls
 echo done 
 timeout /t 2 >nul
@@ -29,4 +22,5 @@ echo Done
 timeout /t 2 >nul
 echo Starting Multi Android Kitchen ...
 python tool.py
+
 
