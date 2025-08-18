@@ -1,6 +1,15 @@
 :: T-ROM Project (palutenfan123) 2025 (Please do not delete this !! , Thanks  : ) )
 @echo off
-
+if exist "%~dp0restart.txt" (
+    set /p RESTARTFLAG=<"%~dp0restart.txt"
+    if "%RESTARTFLAG%"=="1" (
+        echo Restart required. Relaunching as admin...
+        del "%~dp0restart.txt" >nul 2>&1
+        :: Relaunch the current script as admin
+        powershell -Command "Start-Process -FilePath '%~f0' -Verb runAs"
+        exit /b
+    )
+)
 
 cls
 echo Checking if porttool already exists ...
@@ -74,5 +83,6 @@ goto detect
 :closed
 echo Done...
 cls
+
 
 
