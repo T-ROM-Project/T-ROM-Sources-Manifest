@@ -6,6 +6,7 @@ cls
 echo Checking if porttool already exists ...
 
 if not exist "%PORT%\Porttool.exe" (
+cls
     echo Porttool does not exist yet , downloading...
     powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/NoahDomingues/MTK-ROM-Porter/releases/download/v1.0/MTK.ROM.Porter.exe' -OutFile '%PORT%\Porttool.exe'" >nul 2>&1
     if not exist "%PORT%\Porttool.exe" (
@@ -48,6 +49,7 @@ timeout /t 2 >nul
 cls
 echo Starting Auto Porttool ...
 start "" "%PORT%\Porttool.exe"
+timeout /t 5 >nul
 cls
 :detect
 cls
@@ -72,3 +74,4 @@ goto detect
 :closed
 echo Done...
 cls
+
