@@ -31,11 +31,13 @@ echo Extracting scrcpy ...
 powershell.exe -c "Expand-Archive -Path '%FILETEMP%\scrcpy.zip' -DestinationPath '%SCRCPY%' -Force"
 echo Done 
 timeout /t 2 >nul
-echo Starting scrcpy ...
-timeout /t 2 >nul
+echo Please go into settings / about device  then tap the build number until it says "You are now a developer"
+echo Then go back and open Developer Settings and enable usb debuging
+echo Press any key when you have done this steps ...
+pause
+echo Running adb test command...
+cd %SCRCPY%
+adb reboot
+pause
 :scrcpy
-start "" "%SCRCPY%\scrcpy.exe" "--pause-on-exit=if-error %*"
-tasklist /FI "IMAGENAME eq scrcpy.exe" | find /I ".exe" >nul
-if %errorlevel% neq 0 (
-    goto scrcpy
-)
+start "" "%SCRCPY%\scrcpy.exe"
