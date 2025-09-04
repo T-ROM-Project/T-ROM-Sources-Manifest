@@ -53,7 +53,8 @@ cls
 echo Please click on enable press any key when enabled on your Computer ...
 adb devices 
 pause >nul
-Starting scrcpy%PROCESSOR_ARCHITECTURE%.exe ...
+cls
+echo Starting scrcpy%PROCESSOR_ARCHITECTURE%.exe ...
 timeout /t 2 >nul
 start "" "%SCRCPY%\scrcpy.exe"
 :detect
