@@ -50,8 +50,9 @@ echo Press any key when you have done this steps ...
 pause
 echo Running adb test command...
 cd %SCRCPY%
-adb reboot
+cls
+echo Please click on enable and save com
+adb devices
 
 :scrcpy
 start "" "%SCRCPY%\scrcpy.exe"
-
