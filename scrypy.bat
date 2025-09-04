@@ -34,6 +34,9 @@ powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/sc
 goto extract
 
 :extract
+cls
+echo Plug in your Timmkoo to your Computer now , press any key when done ...
+pause >nul
 cls 
 echo done 
 timeout /t 2 >nul
@@ -72,5 +75,8 @@ goto detect
 cls
 echo Closing service worker ...
 taskkill /F /IM adb.exe
+cd %USERPROFILE%
 echo done
 cls
+
+
