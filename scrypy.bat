@@ -1,4 +1,3 @@
-
 @echo off
 cls
 echo Checking if scrcpy already exists ...
@@ -47,12 +46,30 @@ timeout /t 2 >nul
 echo Please go into settings / about device  then tap the build number until it says "You are now a developer"
 echo Then go back and open Developer Settings and enable usb debuging
 echo Press any key when you have done this steps ...
-pause
-echo Running adb test command...
+pause >nul
+echo Running adb connect command...
 cd %SCRCPY%
 cls
-echo Please click on enable and save com
-adb devices
-
-:scrcpy
+echo Please click on enable press any key when enabled on your Computer ...
+adb devices 
+pause >nul
+Starting scrcpy%PROCESSOR_ARCHITECTURE%.exe ...
+timeout /t 2 >nul
 start "" "%SCRCPY%\scrcpy.exe"
+:detect
+cls
+echo This script detects when its closed and goes straight to main menu
+tasklist /FI "IMAGENAME eq scrcpy.exe" | find /I "scrcpy.exe" >nul
+if %errorlevel% neq 0 (
+    echo Closed! Back to main menu...
+    goto closed
+)
+timeout /t 2 >nul
+goto detect
+
+:closed
+cls
+echo Closing service worker ...
+taskkill /F /IM adb.exe
+echo done
+cls
