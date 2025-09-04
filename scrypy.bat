@@ -35,3 +35,7 @@ echo Starting scrcpy ...
 timeout /t 2 >nul
 :scrcpy
 start "" "%SCRCPY%\scrcpy.exe" "--pause-on-exit=if-error %*"
+tasklist /FI "IMAGENAME eq scrcpy.exe" | find /I ".exe" >nul
+if %errorlevel% neq 0 (
+    goto scrcpy
+)
