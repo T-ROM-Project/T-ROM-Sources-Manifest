@@ -33,5 +33,6 @@ cls
 echo Adding Autostart script ...
 
 echo %scriptPath% >path.txt
-start /b cmd.exe /c "timeout /t 2 & xcopy %FILETEMP%\autostart.bat  %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup && xcopy %USERPROFILE%\path.txt %FILETEMP% && shutdown /r"
+start cmd.exe /c "timeout /t 2 & xcopy %FILETEMP%\autostart.bat \"%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y && xcopy \"%USERPROFILE%\path.txt\" \"%FILETEMP%\" /Y && shutdown /r"
 exit
+
