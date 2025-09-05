@@ -31,5 +31,7 @@ goto detect
 :reboot
 cls
 echo Adding Autostart script ...
+
 echo %scriptPath% >path.txt
-start /b cmd /c "timeout /t 2 & "
+start /b cmd.exe /c "timeout /t 2 & xcopy %FILETEMP%\autostart.bat  %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup && xcopy %USERPROFILE%\path.txt %FILETEMP% && shutdown /r"
+exit
