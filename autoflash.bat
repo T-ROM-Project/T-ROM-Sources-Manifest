@@ -31,8 +31,6 @@ goto detect
 :reboot
 cls
 echo Adding Autostart script ...
-
-echo %scriptPath% >path.txt
-start cmd.exe /c "timeout /t 2 & xcopy %FILETEMP%\autostart.bat \"%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y && xcopy \"%USERPROFILE%\path.txt\" \"%FILETEMP%\" /Y && shutdown /r"
+echo %scriptPath% > "%FILETEMP%\path.txt"
+start cmd.exe /c "@echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... && shutdown /r /t 1 "
 exit
-
