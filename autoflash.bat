@@ -10,7 +10,7 @@ if not exist "%MTKCHECk%\mtk_etw_log.exe" (
 )
 :mtkdriv
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/DriverInstall.exe' -OutFile '%MDRI%\mtkdriv.exe'" >nul 2>&1
-powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/T-Start.bat' -OutFile '%FILETEMP%\T-Start.bat'" >nul 2>&1
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/autostart.bat' -OutFile '%FILETEMP%\autostart.bat'" >nul 2>&1
 echo Done 
 cls
 echo Starting Driver Setup...
@@ -31,7 +31,6 @@ goto detect
 :reboot
 cls
 echo Adding Autostart script ...
-echo %scriptPath% > "%FILETEMP%\path.txt"
+echo %scriptPath% %~n0%~x0> "%FILETEMP%\path.txt"
 start cmd.exe /c "@echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... && shutdown /r /t 1 "
 exit
-
