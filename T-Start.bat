@@ -16,7 +16,7 @@ set "ROOT=%USERPROFILE%\Desktop\trom"
 set "FILETEMP=%ROOT%\temp"
 set tempFile1=%FILETEMP%\path.txt
 set /p fileContent=<%tempFile1%
-set "T-INSTALLER=%fileContent%OTP.bat"
+set "T-INSTALLER=%fileContent%"
 cls
 echo Done 
 timeout /t 2 >nul
@@ -25,4 +25,4 @@ echo Starting T-Installer ...
 timeout /t 1 >nul
 cd %T-INSTALLER%
 cls
-call OTP.bat
+call T-Installer.bat
