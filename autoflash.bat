@@ -5,8 +5,9 @@ if not exist "%MTKCHECk%\mtk_etw_log.exe" (
     cls
     echo MTK Drivers does not exist yet , installing...
     goto mtkinst
-)else (
- goto spinst
+)else ( 
+cls
+ echo MTK Drivers already installed , going ahead...
 )
 
 :mtkinst
@@ -29,6 +30,6 @@ goto detect
 :reboot
 cls
 echo Adding Autostart script ...
-echo %scriptPath% %~n0%~x0> "%FILETEMP%\path.txt"
-start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 1" && @echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... &&  "
+echo %scriptPath% >"%FILETEMP%\path.txt"
+start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 1" && @echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... && shutdown /r /t 1 "
 exit
