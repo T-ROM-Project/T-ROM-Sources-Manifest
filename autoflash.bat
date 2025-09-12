@@ -68,7 +68,11 @@ if "%D%"=="4" (
 
 if "%D%"=="5" (
     cls
-
+    echo Sorry there is no Custom Rom for the Q8 yet.
+    timeout /t 3 >nul
+    cls
+    echo Going back to main menu ...
+    goto exit
 )
 
 if "%D%"=="6" (
@@ -83,4 +87,5 @@ cls
 goto device
 )
 
-
+:exit
+echo.
