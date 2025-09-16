@@ -48,22 +48,26 @@ echo 6. I dont know which version i have ?
 SET /P D=Type one option then press ENTER:
 if "%D%"=="1" (
     cls
-
+    echo d1 >"%FILETEMP%\d.txt"
+    call %SCRIPTS%\flash.bat
 )
 
 if "%D%"=="2" (
     cls
-
+echo d2 >"%FILETEMP%\d.txt"
+call %SCRIPTS%\flash.bat
 )
 
 if "%D%"=="3" (
     cls
-
+echo d3 >"%FILETEMP%\d.txt"
+call %SCRIPTS%\flash.bat
 )
 
 if "%D%"=="4" (
     cls
-
+echo d4 >"%FILETEMP%\d.txt"
+call %SCRIPTS%\flash.bat
 )
 
 if "%D%"=="5" (
