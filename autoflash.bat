@@ -1,11 +1,23 @@
 @echo off
 
 cls
-echo Checking if MTK Drivers already exists
+echo Checking if MTK Drivers already exists ...
 if not exist "%MTKCHECk%\mtk_etw_log.exe" (
     cls
     echo MTK Drivers does not exist yet , installing...
     goto mtkinst
+)else ( 
+cls
+ echo MTK Drivers already installed , going ahead...
+ cls
+ goto device
+)
+
+echo Checking if UsbDk Drivers already exists ...
+if not exist "C:\Windows\System32\drivers\UsbDk.sys" (
+    cls
+    echo UsbDk Drivers does not exist , installing ...
+    goto UsbDkinst
 )else ( 
 cls
  echo MTK Drivers already installed , going ahead...
@@ -36,6 +48,17 @@ echo Adding Autostart script ...
 echo %scriptPath% >"%FILETEMP%\path.txt"
 start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 1" && @echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... && shutdown /r /t 1 "
 exit
+
+:UsbDkinst
+cls
+echo Installing UsbDk Driver ...
+msiexec /x "%FILETEMP%\UsbDk.msi" /qn /norestart
+cls
+echo Done 
+timeout /t 2 >nul
+echo Rebooting...
+goto reboot
+
 
 :device
 echo Which Device do you want to flash a Custom ROM for it
