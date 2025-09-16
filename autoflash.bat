@@ -10,9 +10,9 @@ if not exist "%MTKCHECk%\mtk_etw_log.exe" (
 cls
  echo MTK Drivers already installed , going ahead...
  cls
- goto device
+ goto check2
 )
-
+:check2
 echo Checking if UsbDk Drivers already exists ...
 if not exist "C:\Windows\System32\drivers\UsbDk.sys" (
     cls
