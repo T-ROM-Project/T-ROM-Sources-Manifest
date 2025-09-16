@@ -42,22 +42,23 @@ if %errorlevel% neq 0 (
 timeout /t 2 >nul
 goto detect
 
+:UsbDkinst
+cls
+echo Installing UsbDk Driver ...
+msiexec /i "%FILETEMP%\UsbDk.msi" /qn /norestart
+cls
+echo Done 
+timeout /t 2 >nul
+echo Rebooting...
+goto reboot
+
+
 :reboot
 cls
 echo Adding Autostart script ...
 echo %scriptPath% >"%FILETEMP%\path.txt"
 start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 1" && @echo off && echo Making final setup ... && timeout /t 2 >nul && xcopy "%FILETEMP%\T-Start.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\" /Y" && start cmd.exe /c "@echo off && echo Waiting until other steps are finished && timeout /t 9 && cls && echo Rebooting... && shutdown /r /t 1 "
 exit
-
-:UsbDkinst
-cls
-echo Installing UsbDk Driver ...
-msiexec /x "%FILETEMP%\UsbDk.msi" /qn /norestart
-cls
-echo Done 
-timeout /t 2 >nul
-echo Rebooting...
-goto reboot
 
 
 :device
