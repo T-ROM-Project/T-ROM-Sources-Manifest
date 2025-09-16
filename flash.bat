@@ -15,4 +15,10 @@ cls
 echo Extracting extra resources ...
 powershell.exe -c "Expand-Archive -Path '%FILETEMP%\mtkclient.zip' -DestinationPath '%MTKCLI%' -Force"
 powershell.exe -c "Expand-Archive -Path '%FILETEMP%\ftool.zip' -DestinationPath '%FTOOL%' -Force"
-pause
+cls
+echo Done
+timeout /t 3 >nul
+echo Setting mtkclient up ...
+cd %MTKCLI%\mtkclient-main
+pip3 install -r requirements.txt
+cd %ROOT%
