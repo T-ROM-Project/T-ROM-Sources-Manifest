@@ -43,22 +43,23 @@ SET /P D=Type one option then press ENTER:
 IF "%D%"=="1" (
     cls
     echo Q5/Q3E>"%DEVICE%"
-    pause
+    goto mtkbp
 ) ELSE IF "%D%"=="2" (
     cls
     echo Q8>"%DEVICE%"
-    pause
+    goto mtkbp
 ) ELSE IF "%D%"=="3" (
     cls
     echo Y1>"%DEVICE%"
-    pause
+    goto mtkbp
 ) ELSE IF "%D%"=="4" (
     cls
     echo G1/G3>"%DEVICE%"
-    pause
+    goto mtkbp
 ) 
 
 :mtkbp
 cls
 echo %D%
 pause
+
