@@ -61,4 +61,5 @@ IF "%D%"=="1" (
 :mtkbp
 set /p >%DEVICE%=<%DNAME%
 echo %DNAME%
+pause
 
