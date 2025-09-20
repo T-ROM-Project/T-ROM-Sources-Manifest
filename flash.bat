@@ -1,7 +1,6 @@
 @echo off
 cls
 set DEVICE=%FILETEMP%\d.txt
-set YEAR=%FILETEMP%\y.txt
 echo Setting symlink up ...
 mklink "%SystemRoot%\System32\python3.exe" "C:\Program Files\Python313\python.exe"
 timeout /t 3 >nul
@@ -43,7 +42,7 @@ echo -----------------------------------
 SET /P D=Type one option then press ENTER:
 IF "%D%"=="1" (
     cls
-    echo Q5>"%DEVICE%"
+    echo Q5/Q3E>"%DEVICE%"
     pause
 ) ELSE IF "%D%"=="2" (
     cls
@@ -55,6 +54,11 @@ IF "%D%"=="1" (
     pause
 ) ELSE IF "%D%"=="4" (
     cls
-    echo G1>"%DEVICE%"
+    echo G1/G3>"%DEVICE%"
     pause
 ) 
+
+:mtkbp
+set /p >%DEVICE%=<%DNAME%
+echo %DNAME%
+
