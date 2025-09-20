@@ -43,19 +43,18 @@ echo -----------------------------------
 SET /P D=Type one option then press ENTER:
 IF "%D%"=="1" (
     cls
-    echo Q5 >"%DEVICE%"
+    echo Q5>"%DEVICE%"
     pause
 ) ELSE IF "%D%"=="2" (
     cls
-    echo Q8 >"%DEVICE%"
+    echo Q8>"%DEVICE%"
     pause
 ) ELSE IF "%D%"=="3" (
     cls
-    echo Y1 >"%DEVICE%"
+    echo Y1>"%DEVICE%"
     pause
 ) ELSE IF "%D%"=="4" (
     cls
-    echo G1 >"%DEVICE%"
+    echo G1>"%DEVICE%"
     pause
 ) 
-
