@@ -1,6 +1,5 @@
 @echo off
 cls
-set DEVICE=%FILETEMP%\d.txt
 echo Setting symlink up ...
 mklink "%SystemRoot%\System32\python3.exe" "C:\Program Files\Python313\python.exe"
 timeout /t 3 >nul
@@ -11,6 +10,7 @@ powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://gith
 powershell.exe -c "Expand-Archive -Path '%FILETEMP%\mtkclient.zip' -DestinationPath '%MTKCLI%' -Force"
 goto bridge
 )else (
+powershell.exe -c "mkdir '%MTKCLIOUT%'"    >nul 2>&1
 goto bridge
 )
 :bridge
@@ -22,9 +22,11 @@ goto lol
 goto lol
 )
 :lol
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%\RP.hta' -OutFile '%FILETEMP%\RP.hta'" >nul 2>&1
 cls
 echo Done
 timeout /t 3 >nul
+cls
 echo Setting mtkclient up ...
 cd %MTKCLI%\mtkclient-main
 pip3 install -r requirements.txt
@@ -61,5 +63,9 @@ IF "%D%"=="1" (
 :mtkbp
 set /p DNAME=<%DEVICE%
 cls
-echo %DNAME%
-pause
+echo Backing up your %DNAME% firmware ... 
+mshta.exe "%RP%"
+echo Plug in your %DNAME% now and find the reset pin based on the info tab that opened right now  
+echo Then push the reset pin ...
+python3 mtk.py rl output
+pause 
