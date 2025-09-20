@@ -39,5 +39,23 @@ echo 1 Timmkoo Q5/Q3e
 echo 2 Timmkoo Q8
 echo 3 Innioasis Y1
 echo 4 Innioasis G1/G3
-pause
+echo -----------------------------------
+SET /P D=Type one option then press ENTER:
+IF "%D%"=="1" (
+    cls
+    echo Q5 >"%DEVICE%"
+    pause
+) ELSE IF "%D%"=="2" (
+    cls
+    echo Q8 >"%DEVICE%"
+    pause
+) ELSE IF "%D%"=="3" (
+    cls
+    echo Y1 >"%DEVICE%"
+    pause
+) ELSE IF "%D%"=="4" (
+    cls
+    echo G1 >"%DEVICE%"
+    pause
+) 
 
