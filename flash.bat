@@ -64,8 +64,9 @@ IF "%D%"=="1" (
 set /p DNAME=<%DEVICE%
 cls
 echo Backing up your %DNAME% firmware ... 
-start cmd.exe /c "mshta.exe "%RP%""
+start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 1" && mshta.exe "%RP%""
 echo Plug in your %DNAME% now and find the reset pin based on the info tab that opened right now  
 echo Then push the reset pin ...
 python3 mtk.py rl output
 pause 
+
