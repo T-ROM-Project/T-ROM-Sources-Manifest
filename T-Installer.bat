@@ -1,6 +1,202 @@
 :: T-ROM Project (palutenfan123) 2025 (Please do not delete this !! , Thanks  : ) )
 @echo off
 cls
+
+:: Extra parameter check ;)
+if "%~1"=="" (
+    goto parampass
+)
+
+if /i "%~1"=="-c" (
+    echo.
+    goto c
+)
+
+:c
+if "%~2"=="" (
+    goto parampass
+)
+
+if /i "%~2"=="r" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo r
+)
+
+if /i "%~2"=="u" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    ) else if "%~3"=="b" (
+        if "%~4"=="" (
+            echo Missing parameters
+            pause
+            exit /b
+        ) else (
+            echo Unpacking...
+            pause
+        )
+    ) else if "%~3"=="s" (
+        if "%~4"=="" (
+            echo Missing parameters
+            pause
+            exit /b
+        ) else (
+            echo Unpacking...
+            pause
+        )
+    ) else (
+        echo Wrong parameters
+        pause
+        exit /b
+    )
+)
+
+if /i "%~2"=="repack" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo repack
+)
+
+if /i "%~2"=="unpack" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    ) else if "%~3"=="b" (
+        if "%~4"=="" (
+            echo Missing parameters
+            pause
+            exit /b
+        ) else (
+            echo Unpacking...
+            pause
+        )
+    ) else if "%~3"=="s" (
+        if "%~4"=="" (
+            echo Missing parameters
+            pause
+            exit /b
+        ) else (
+            echo Unpacking...
+            pause
+        )
+    ) else (
+        echo Wrong parameters
+        pause
+        exit /b
+    )
+)
+
+if /i "%~2"=="s" (
+    if "%~3"=="short" (
+        if "%~4"=="r" (
+            echo Removing shortcode ...
+            attrib.exe -s -h -r "%userprofile%\desktop\mtk.lnk"
+            del "%userprofile%\desktop\mtk.lnk"
+            echo Done
+            pause
+            exit /b
+        ) else (
+            echo Adding short cmd name..
+            powershell -NoLogo -NoProfile -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%USERPROFILE%\Desktop\mtk.lnk');$s.TargetPath='%~f0';$s.Save()"
+            attrib.exe +h +s "%userprofile%\desktop\mtk.lnk"
+            echo Done
+            echo You can now use the Shortname mtk in cmd on desktop: start mtk -c examplecommand
+            pause
+            exit /b
+        )
+    ) else (
+        echo Making shortcut to desktop...
+        powershell -NoLogo -NoProfile -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%USERPROFILE%\Desktop\T-Installer.lnk');$s.TargetPath='%~f0';$s.Save()"
+        echo Done
+        pause
+        exit /b
+    )
+)
+
+if /i "%~2"=="shortcut" (
+    if "%~3"=="short" (
+        if "%~4"=="r" (
+            echo Removing shortcode ...
+            attrib.exe -s -h -r "%userprofile%\desktop\mtk.lnk"
+            del "%userprofile%\desktop\mtk.lnk"
+            echo Done
+            pause
+            exit /b
+        ) else (
+            echo Adding short cmd name..
+            powershell -NoLogo -NoProfile -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%USERPROFILE%\Desktop\mtk.lnk');$s.TargetPath='%~f0';$s.Save()"
+            attrib.exe +h +s "%userprofile%\desktop\mtk.lnk"
+            move "%USERPROFILE%\Desktop\mtk.lnk" "C:\Windows\mtk.lnk"
+            echo Done
+            echo You can now use the Shortname mtk in cmd: start mtk -c examplecommand
+            pause
+            exit /b
+        )
+    ) else (
+        echo Making shortcut to desktop...
+        powershell -NoLogo -NoProfile -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%USERPROFILE%\Desktop\T-Installer.lnk');$s.TargetPath='%~f0';$s.Save()"
+        echo Done
+        pause
+        exit /b
+    )
+)
+
+if /i "%~2"=="d" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo d
+)
+
+if /i "%~2"=="download" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo download
+)
+
+if /i "%~2"=="install" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo install
+)
+
+if /i "%~2"=="i" (
+    if "%~3"=="" (
+        echo Missing parameters
+        pause
+        exit /b
+    )
+    echo i
+)
+
+if /i "%~2"=="update" (
+    echo Downloading newer Version of T-Installer ...
+    powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/T-ROM-Project/T-ROM-Sources-Manifest/raw/refs/heads/main/T-Installer.bat' -OutFile '%~dp0\T-Installer.bat'" >nul 2>&1
+    cls
+    echo Done
+    exit /b
+)
+
+
+
+:parampass
 :: Requesting admin rights
 :-------------------------------------
     IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
@@ -29,7 +225,7 @@ if '%errorlevel%' NEQ '0' (
 :: Admin rights request finished
 :: Making Open it in Fullscreen
 powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
-:: Start of Script
+:: Start of the main Script
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
@@ -83,6 +279,7 @@ if not exist "%AUTOSTART%\T-Start.bat" (
 timeout /t 2 >nul
 CALL "%SCRIPTS%\autoflash.bat"
 )
+
 ::Check Done...
 :continue
 :: >Boot Startup Logo
