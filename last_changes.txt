@@ -1,2 +1,1 @@
-New in %version% :
--Fixed Bugs
+New in %version% : Bugs Fixed
