@@ -168,13 +168,18 @@ if /i "%~2"=="download" (
     echo download
 )
 
-if /i "%~2"=="install" (
+if /i "%~2"=="updatesucess" (
     if "%~3"=="" (
         echo Missing parameters
         pause
         exit /b
+    ) else (
+    echo Sucessfully updated to : %~3
+    timeout /t 2 >nul
+    cls
+    echo Skipping update check ...
+    goto updatefinished
     )
-    echo install
 )
 
 if /i "%~2"=="i" (
@@ -200,7 +205,7 @@ if /i "%~2"=="update" (
     del "%VERCHECK%"
     del "%CHANGELOG%"
     set scriptPath=%~dp0
-    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat"
+    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess"
     exit
 )
 
@@ -239,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=1.8"
+set "VER=1.7"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -328,8 +333,9 @@ attrib.exe -s -h -r "%CHANGELOG%"
 del "%VERCHECK%"
 del "%CHANGELOG%"
 timeout /t 2 >nul
-cls
 : Update mechanism end
+:updatefinished
+cls
 :: >Boot Startup Logo
 echo TTTTTTT   RRRRRR   OOOOOO   M     M  
 echo    T      R     R  O    O   MM   MM  
