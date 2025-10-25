@@ -197,6 +197,42 @@ if /i "%~2"=="update" (
 
 
 :parampass
+
+color 0E
+echo Checking for Updates...
+set "local_version=000002"
+
+set "remote_version_url=https://raw.githubusercontent.com/HaWai12/updater/refs/heads/updatenotifying/remote_version.txt"
+
+set "temp_remote_version_file=temp_remote_version.txt"
+
+curl -s -o "%temp_remote_version_file%" "%remote_version_url%"
+
+if not exist "%temp_remote_version_file%" (
+    echo Please Check your internet connection
+    pause
+    goto Frage
+)
+
+for /f "delims=" %%A in (%temp_remote_version_file%) do set "remote_version=%%A"
+
+if "%local_version%" NEQ "%remote_version%" (
+    cls
+    color 01
+    echo New Update availible
+    echo Lokal  Version: %local_version%
+    echo New    Version: %remote_version%
+    echo       Please update !!!
+    start chrome.exe https://github.com/HaWai12/updater/tree/Thedebugproject
+    start msedge https://github.com/HaWai12/updater/tree/Thedebugproject
+    pause 
+    exit 
+) else (
+    cls
+    echo No new Updates
+)
+del "%temp_remote_version_file%"
+
 :: Requesting admin rights
 :-------------------------------------
     IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
