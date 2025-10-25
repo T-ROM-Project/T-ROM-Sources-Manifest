@@ -308,11 +308,10 @@ if not exist "%VERCHECK%" (
 pause && exit /b
 )
 
-for /f "delims=" %%A in (%temp_remote_version_file%) do set "version=%%A"
+for /f "delims=" %%A in (%VERCHECK%) do set "version=%%A"
 
 if "%VER%" NEQ "%version%" (
     cls
-    color 01
     echo New Update availible
     echo Lokal  Version: %local_version%
     echo New Version: %version%
