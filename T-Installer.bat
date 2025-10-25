@@ -195,6 +195,10 @@ if /i "%~2"=="update" (
     timeout /t 2 >nul
     cls
     echo Restarting ...
+    attrib.exe -s -h -r "%VERCHECK%"
+    attrib.exe -s -h -r "%CHANGELOG"
+    del "%VERCHECK%"
+    del "%CHANGELOG%"
     set scriptPath=%~dp0
     start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat"
     exit
@@ -322,7 +326,7 @@ if "%VER%" NEQ "%version%" (
 )
 attrib.exe -s -h -r "%VERCHECK%"
 attrib.exe -s -h -r "%CHANGELOG"
-del "%temp_remote_version_file%"
+del "%VERCHECK%"
 del "%CHANGELOG%"
 timeout /t 2 >nul
 cls
