@@ -196,7 +196,7 @@ if /i "%~2"=="update" (
     cls
     echo Restarting ...
     attrib.exe -s -h -r "%VERCHECK%"
-    attrib.exe -s -h -r "%CHANGELOG"
+    attrib.exe -s -h -r "%CHANGELOG%"
     del "%VERCHECK%"
     del "%CHANGELOG%"
     set scriptPath=%~dp0
@@ -300,8 +300,8 @@ powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/la
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_changes.txt' -OutFile '%CHANGELOG%'" >nul 2>&1
 attrib.exe +h +s "%VERCHECK%"
 attrib.exe +h +s "%CHANGELOG%"
-set /p info=<%CHANGELOG%
-set "UPDATEINFO=%info%"
+set /p filecontent=<%CHANGELOG%
+set "filecontent=%info%"
 if not exist "%VERCHECK%" (
     echo Please Check your internet connection !!
     echo T-Installer cant check for updates without Internet
@@ -324,7 +324,7 @@ if "%VER%" NEQ "%version%" (
     echo No new Updates
 )
 attrib.exe -s -h -r "%VERCHECK%"
-attrib.exe -s -h -r "%CHANGELOG"
+attrib.exe -s -h -r "%CHANGELOG%"
 del "%VERCHECK%"
 del "%CHANGELOG%"
 timeout /t 2 >nul
