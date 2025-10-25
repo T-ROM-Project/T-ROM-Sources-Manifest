@@ -174,7 +174,7 @@ if /i "%~2"=="updatesucess" (
         pause
         exit /b
     ) else (
-    echo Sucessfully updated to : %~3
+    echo Sucessfully updated from %~3 to the latest Version
     timeout /t 2 >nul
     cls
     echo Skipping update check ...
@@ -205,7 +205,7 @@ if /i "%~2"=="update" (
     del "%VERCHECK%"
     del "%CHANGELOG%"
     set scriptPath=%~dp0
-    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess %version%"
+    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess %VER%"
     exit
 )
 
@@ -306,7 +306,7 @@ powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/la
 attrib.exe +h +s "%VERCHECK%"
 attrib.exe +h +s "%CHANGELOG%"
 set /p filecontent=<%CHANGELOG%
-set "filecontent=%info%"
+set "INFO=%filecontent%"
 if not exist "%VERCHECK%" (
     echo Please Check your internet connection !!
     echo T-Installer cant check for updates without Internet
@@ -318,10 +318,10 @@ for /f "delims=" %%A in (%VERCHECK%) do set "version=%%A"
 if "%VER%" NEQ "%version%" (
     cls
     echo New Update availible
-    echo Lokal  Version: %local_version%
+    echo This Version: %VER%
     echo New Version: %version%
     echo CHANGELOG :
-    echo %UPDATEINFO%
+    echo %INFO%
     timeout /t 5 >nul
     goto newver
 ) else (
