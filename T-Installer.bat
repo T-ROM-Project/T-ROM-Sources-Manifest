@@ -289,6 +289,7 @@ CALL "%SCRIPTS%\autoflash.bat"
 )
 
 ::Check Done...
+:continue
 :: Update mechanism start 
 echo Checking for Updates...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_version.txt' -OutFile '%VERCHECK%'" >nul 2>&1
@@ -326,7 +327,6 @@ del "%CHANGELOG%"
 timeout /t 2 >nul
 cls
 : Update mechanism end
-:continue
 :: >Boot Startup Logo
 echo TTTTTTT   RRRRRR   OOOOOO   M     M  
 echo    T      R     R  O    O   MM   MM  
