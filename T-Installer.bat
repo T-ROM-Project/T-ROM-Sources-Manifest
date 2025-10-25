@@ -244,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=1.7"
+set "VER=1.8"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -362,18 +362,39 @@ if /i "%disclaimer%"=="n" (
 cls
 color 6
 echo Booting up...
+if not exist %ROOT% (
 powershell.exe -c "mkdir '%ROOT%'"    >nul 2>&1
+)
+if not exist %RES% (
 powershell.exe -c "mkdir '%RES%'"     >nul 2>&1
+)
+if not exist %TOOLS% (
 powershell.exe -c "mkdir '%TOOLS%'"   >nul 2>&1
+)
+if not exist %SCRIPTS% (
 powershell.exe -c "mkdir '%KITCHEN%'" >nul 2>&1
+)
+if not exist %FTOOL% (
 powershell.exe -c "mkdir '%FTOOL%'"   >nul 2>&1
+)
+if not exist %PORT% (
 powershell.exe -c "mkdir '%PORT%'"    >nul 2>&1
+)
+if not exist %SCRIPTS% (
 powershell.exe -c "mkdir '%SCRIPTS%'"    >nul 2>&1
+)
+if not exist %FILETEMP% (
 powershell.exe -c "mkdir '%FILETEMP%'"    >nul 2>&1
+)
+if not exist %SCRCPY% (
 powershell.exe -c "mkdir '%SCRCPY%'"    >nul 2>&1
+)
+if not exist %MTKCLI% (
 powershell.exe -c "mkdir '%MTKCLI%'"    >nul 2>&1
+)
 attrib.exe +h +s "%SCRIPTS%"
 attrib.exe +h +s "%FILETEMP%"
+timeout /t 2 >nul
 cls
 echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/porttool.bat' -OutFile '%SCRIPTS%\porttool.bat'" >nul 2>&1
