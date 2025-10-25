@@ -239,7 +239,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=1.7"
+set "VER=1.8"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
