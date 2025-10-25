@@ -210,7 +210,7 @@ if /i "%~2"=="update" (
 )
 
 
-
+:updatefinished
 :parampass
 :: Requesting admin rights
 :-------------------------------------
@@ -269,7 +269,7 @@ set "DEVICE=%FILETEMP%\d.txt"
 set "YEAR=%FILETEMP%\y.txt"
 set  "RP=%FILETEMP%\RP.hta"
 set "MTKCLIOUT=%MTKCLI%\mtkclient-main\output"
-set "VERCHECK=%ROOT%\versioncheck.txt
+set "VERCHECK=%ROOT%\versioncheck.txt"
 set "CHANGELOG=%ROOT%\changelog.txt"
 :: Checking for Flags
 if not exist "%ROOT%\!deletemewhenrel.txt" (
@@ -334,7 +334,6 @@ del "%VERCHECK%"
 del "%CHANGELOG%"
 timeout /t 2 >nul
 : Update mechanism end
-:updatefinished
 cls
 :: >Boot Startup Logo
 echo TTTTTTT   RRRRRR   OOOOOO   M     M  
