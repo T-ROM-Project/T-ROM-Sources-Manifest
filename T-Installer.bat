@@ -205,7 +205,7 @@ if /i "%~2"=="update" (
     del "%VERCHECK%"
     del "%CHANGELOG%"
     set scriptPath=%~dp0
-    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess"
+    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess %version%"
     exit
 )
 
