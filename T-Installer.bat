@@ -187,52 +187,22 @@ if /i "%~2"=="i" (
 )
 
 if /i "%~2"=="update" (
+    :newver
     echo Downloading newer Version of T-Installer ...
     powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/T-ROM-Project/T-ROM-Sources-Manifest/raw/refs/heads/main/T-Installer.bat' -OutFile '%~dp0\T-Installer.bat'" >nul 2>&1
     cls
     echo Done
-    exit /b
+    timeout /t 2 >nul
+    cls
+    echo Restarting ...
+    set scriptPath=%~dp0
+    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat"
+    exit
 )
 
 
 
 :parampass
-
-color 0E
-echo Checking for Updates...
-set "local_version=000002"
-
-set "remote_version_url=https://raw.githubusercontent.com/HaWai12/updater/refs/heads/updatenotifying/remote_version.txt"
-
-set "temp_remote_version_file=temp_remote_version.txt"
-
-curl -s -o "%temp_remote_version_file%" "%remote_version_url%"
-
-if not exist "%temp_remote_version_file%" (
-    echo Please Check your internet connection
-    pause
-    goto Frage
-)
-
-for /f "delims=" %%A in (%temp_remote_version_file%) do set "remote_version=%%A"
-
-if "%local_version%" NEQ "%remote_version%" (
-    cls
-    color 01
-    echo New Update availible
-    echo Lokal  Version: %local_version%
-    echo New    Version: %remote_version%
-    echo       Please update !!!
-    start chrome.exe https://github.com/HaWai12/updater/tree/Thedebugproject
-    start msedge https://github.com/HaWai12/updater/tree/Thedebugproject
-    pause 
-    exit 
-) else (
-    cls
-    echo No new Updates
-)
-del "%temp_remote_version_file%"
-
 :: Requesting admin rights
 :-------------------------------------
     IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
@@ -290,6 +260,8 @@ set "DEVICE=%FILETEMP%\d.txt"
 set "YEAR=%FILETEMP%\y.txt"
 set  "RP=%FILETEMP%\RP.hta"
 set "MTKCLIOUT=%MTKCLI%\mtkclient-main\output"
+set "VERCHECK=%ROOT%\versioncheck.txt
+set "CHANGELOG=%ROOT%\changelog.txt"
 :: Checking for Flags
 if not exist "%ROOT%\!deletemewhenrel.txt" (
     cls
@@ -317,6 +289,43 @@ CALL "%SCRIPTS%\autoflash.bat"
 )
 
 ::Check Done...
+:: Update mechanism start 
+echo Checking for Updates...
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_version.txt' -OutFile '%VERCHECK%'" >nul 2>&1
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_changes.txt' -OutFile '%CHANGELOG%'" >nul 2>&1
+attrib.exe +h +s "%VERCHECK%"
+attrib.exe +h +s "%CHANGELOG%"
+set /p info=<%CHANGELOG%
+set "UPDATEINFO=%info%"
+if not exist "%VERCHECK%" (
+    echo Please Check your internet connection !!
+    echo T-Installer cant check for updates without Internet
+pause && exit /b
+)
+
+for /f "delims=" %%A in (%temp_remote_version_file%) do set "version=%%A"
+
+if "%VER%" NEQ "%version%" (
+    cls
+    color 01
+    echo New Update availible
+    echo Lokal  Version: %local_version%
+    echo New Version: %version%
+    echo CHANGELOG :
+    echo %UPDATEINFO%
+    timeout /t 5 >nul
+    goto newver
+) else (
+    cls
+    echo No new Updates
+)
+attrib.exe -s -h -r "%VERCHECK%"
+attrib.exe -s -h -r "%CHANGELOG"
+del "%temp_remote_version_file%"
+del "%CHANGELOG%"
+timeout /t 2 >nul
+cls
+: Update mechanism end
 :continue
 :: >Boot Startup Logo
 echo TTTTTTT   RRRRRR   OOOOOO   M     M  
@@ -354,8 +363,8 @@ powershell.exe -c "mkdir '%SCRIPTS%'"    >nul 2>&1
 powershell.exe -c "mkdir '%FILETEMP%'"    >nul 2>&1
 powershell.exe -c "mkdir '%SCRCPY%'"    >nul 2>&1
 powershell.exe -c "mkdir '%MTKCLI%'"    >nul 2>&1
-::attrib.exe +h +s "%SCRIPTS%"
-::attrib.exe +h +s "%FILETEMP%"
+attrib.exe +h +s "%SCRIPTS%"
+attrib.exe +h +s "%FILETEMP%"
 cls
 echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/porttool.bat' -OutFile '%SCRIPTS%\porttool.bat'" >nul 2>&1
