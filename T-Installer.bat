@@ -244,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=1.9"
+set "VER=2.0"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -339,7 +339,6 @@ attrib.exe -s -h -r "%VERCHECK%"
 attrib.exe -s -h -r "%CHANGELOG%"
 del "%VERCHECK%"
 del "%CHANGELOG%"
-goto updatecheckpass
 )
 :updatecheckpass
 timeout /t 2 >nul
