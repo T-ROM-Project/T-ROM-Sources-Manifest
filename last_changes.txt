@@ -1,1 +1,1 @@
-New in the update : Changelog Fixed
+New in the update : Added Disclaimer saving and first run setup

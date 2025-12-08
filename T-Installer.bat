@@ -244,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=1.8"
+set "VER=1.9"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -271,6 +271,8 @@ set  "RP=%FILETEMP%\RP.hta"
 set "MTKCLIOUT=%MTKCLI%\mtkclient-main\output"
 set "VERCHECK=%ROOT%\versioncheck.txt"
 set "CHANGELOG=%ROOT%\changelog.txt"
+set "disclaimercheckdir=%appdata%\T-Installer"
+set "disclaimercheck=%disclaimercheckdir%\Accept.txt"
 :: Checking for Flags
 if not exist "%ROOT%\!deletemewhenrel.txt" (
     cls
@@ -299,7 +301,12 @@ CALL "%SCRIPTS%\autoflash.bat"
 
 ::Check Done...
 :continue
-:: Update mechanism start 
+if not exist "%ROOT%" (
+    cls
+    goto updatecheckpass
+)
+ :: Update mechanism start 
+
 echo Checking for Updates...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_version.txt' -OutFile '%VERCHECK%'" >nul 2>&1
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_changes.txt' -OutFile '%CHANGELOG%'" >nul 2>&1
@@ -311,7 +318,7 @@ if not exist "%VERCHECK%" (
     echo Please Check your internet connection !!
     echo T-Installer cant check for updates without Internet
 pause && exit /b
-)
+
 
 for /f "delims=" %%A in (%VERCHECK%) do set "version=%%A"
 
@@ -332,6 +339,9 @@ attrib.exe -s -h -r "%VERCHECK%"
 attrib.exe -s -h -r "%CHANGELOG%"
 del "%VERCHECK%"
 del "%CHANGELOG%"
+goto updatecheckpass
+)
+:updatecheckpass
 timeout /t 2 >nul
 : Update mechanism end
 cls
@@ -347,18 +357,28 @@ echo ====================================
 timeout /t 5 >nul
 :: Disclaimer
 cls
-color 4
-echo I am NOT RESPONSABLE for your actions.
-echo I am NOT RESPONSABLE for bricked devices, dead SD cards, thermonuclear war.
-echo YOU are choosing to make these modifications, and if you point the finger at me for messing up your device, I will laugh at you
-set /p disclaimer=Do you understand ? (y/n):
+if not exist "%disclaimercheck%" ( powershell.exe -c "mkdir '%disclaimercheckdir%'" >nul 2>&1 ) 
+if exist "%disclaimercheck%" ( goto bootup ) 
+    color 4
 
-if /i "%disclaimer%"=="n" (
-    echo You do not agree to the Disclaimer. Closing Script.
-    goto exit
-)
-:: Making Filesystem for Multitool
+    echo I am NOT RESPONSIBLE for your actions.
+    echo I am NOT RESPONSIBLE for bricked devices, dead SD cards, thermonuclear war.
+    echo YOU are choosing to make these modifications, and if you point the finger at me for messing up your device, I will laugh at you.
+    echo.
+    set /p "disclaimer=Do you understand ? (y/n): "
+
+    if /i "%disclaimer%"=="n" (
+        echo You do not agree to the Disclaimer. Closing Script.
+        goto exit
+    )
+
+    :: Save acceptance
+    echo SAVED
+    timeout /t 5 >nul
+    echo Accepted the Disclaimer>"%disclaimercheck%"
+
 cls
+:bootup
 color 6
 echo Booting up...
 if not exist %ROOT% (
