@@ -244,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=2.0"
+set "VER=2.1"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -300,13 +300,18 @@ CALL "%SCRIPTS%\autoflash.bat"
 )
 
 ::Check Done...
+
+:: Update Check not when first run
 :continue
 if not exist "%ROOT%" (
     cls
     goto updatecheckpass
+) else (
+goto update    
 )
- :: Update mechanism start 
 
+:update
+:: Update mechanism start 
 echo Checking for Updates...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_version.txt' -OutFile '%VERCHECK%'" >nul 2>&1
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/last_changes.txt' -OutFile '%CHANGELOG%'" >nul 2>&1
@@ -318,7 +323,7 @@ if not exist "%VERCHECK%" (
     echo Please Check your internet connection !!
     echo T-Installer cant check for updates without Internet
 pause && exit /b
-
+)
 
 for /f "delims=" %%A in (%VERCHECK%) do set "version=%%A"
 
@@ -339,11 +344,10 @@ attrib.exe -s -h -r "%VERCHECK%"
 attrib.exe -s -h -r "%CHANGELOG%"
 del "%VERCHECK%"
 del "%CHANGELOG%"
-)
-:updatecheckpass
 timeout /t 2 >nul
 : Update mechanism end
 cls
+:updatecheckpass
 :: >Boot Startup Logo
 echo TTTTTTT   RRRRRR   OOOOOO   M     M  
 echo    T      R     R  O    O   MM   MM  

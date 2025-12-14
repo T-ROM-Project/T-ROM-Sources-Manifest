@@ -1,1 +1,1 @@
-New in the update : Added Disclaimer saving and first run setup and minor update fixes
+Added Disclaimer saving and first run setup and minor update fixes and Animations
