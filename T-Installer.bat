@@ -577,6 +577,8 @@ if exist "%expermimentalset%" (
     echo ===============================================================
     echo 10 %NOCONFIG%
     echo ===============================================================
+) else (
+echo.
 )
 
 SET /P M=Type one option then press ENTER:

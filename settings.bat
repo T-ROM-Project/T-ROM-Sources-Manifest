@@ -18,7 +18,7 @@ echo 2 Disable experimental Choices
 SET /P S=Type one option then press ENTER:
 IF "%M%"=="1" (
     echo SAVED
-    echo ENABLED>"%expermimentalset%"
+    echo ENABLED >"%expermimentalset%"
     goto exit
 )
 IF "%M%"=="2" (
