@@ -271,8 +271,10 @@ set  "RP=%FILETEMP%\RP.hta"
 set "MTKCLIOUT=%MTKCLI%\mtkclient-main\output"
 set "VERCHECK=%ROOT%\versioncheck.txt"
 set "CHANGELOG=%ROOT%\changelog.txt"
-set "disclaimercheckdir=%appdata%\T-Installer"
-set "disclaimercheck=%disclaimercheckdir%\Accept.txt"
+set "SAVEDATA=%appdata%\T-Installer"
+set "disclaimercheck=%SAVEDATA%\Accept.txt"
+set "expermimentalset=%SAVEDATA%\additionalbetaoptions.txt"
+set "NOCONFIG=Not yet configured"
 :: Checking for Flags
 if not exist "%ROOT%\!deletemewhenrel.txt" (
     cls
@@ -383,55 +385,124 @@ if exist "%disclaimercheck%" ( goto bootup )
 cls
 :bootup
 color 6
-echo Booting up...
+echo Booting up .
 if not exist %ROOT% (
 powershell.exe -c "mkdir '%ROOT%'"    >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ..
 if not exist %RES% (
 powershell.exe -c "mkdir '%RES%'"     >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ...
 if not exist %TOOLS% (
 powershell.exe -c "mkdir '%TOOLS%'"   >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up .
 if not exist %SCRIPTS% (
 powershell.exe -c "mkdir '%KITCHEN%'" >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ..
 if not exist %FTOOL% (
 powershell.exe -c "mkdir '%FTOOL%'"   >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ...
 if not exist %PORT% (
 powershell.exe -c "mkdir '%PORT%'"    >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up .
 if not exist %SCRIPTS% (
 powershell.exe -c "mkdir '%SCRIPTS%'"    >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ..
 if not exist %FILETEMP% (
 powershell.exe -c "mkdir '%FILETEMP%'"    >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up ...
 if not exist %SCRCPY% (
 powershell.exe -c "mkdir '%SCRCPY%'"    >nul 2>&1
+) else (
+    timeout /t 1 >nul
 )
+cls
+echo Booting up .
 if not exist %MTKCLI% (
 powershell.exe -c "mkdir '%MTKCLI%'"    >nul 2>&1
+) else (
+   timeout /t 1 >nul 
 )
+cls
+echo Booting up ..
 attrib.exe +h +s "%SCRIPTS%"
 attrib.exe +h +s "%FILETEMP%"
-timeout /t 2 >nul
+timeout /t 1 >nul
+echo Booting up ...
+cls
+echo Done
+cls
+echo Downloading Resources.
+timeout /t 1 >nul
+cls
+echo Downloading Resources..
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/porttool.bat' -OutFile '%SCRIPTS%\porttool.bat'" >nul 2>&1
 cls
 echo Downloading Resources...
-powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/porttool.bat' -OutFile '%SCRIPTS%\porttool.bat'" >nul 2>&1
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/dlhelper.bat' -OutFile '%SCRIPTS%\dlhelper.bat'" >nul 2>&1
+cls
+echo Downloading Resources.
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/kitchen.bat' -OutFile '%SCRIPTS%\kitchen.bat'" >nul 2>&1
+cls
+echo Downloading Resources..
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/mio.bat' -OutFile '%SCRIPTS%\mio.bat'" >nul 2>&1
+echo Downloading Resources..
+cls
+echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/scrypy.bat' -OutFile '%SCRIPTS%\scrypy.bat'" >nul 2>&1
+cls
+echo Downloading Resources.
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/credits.bat' -OutFile '%SCRIPTS%\credits.bat'" >nul 2>&1
+cls
+echo Downloading Resources..
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/autoflash.bat' -OutFile '%SCRIPTS%\autoflash.bat'" >nul 2>&1
+cls 
+echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/autostart.bat' -OutFile '%FILETEMP%\autostart.bat'" >nul 2>&1
+cls
+echo Downloading Resources.
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/T-Start.bat' -OutFile '%FILETEMP%\T-Start.bat'" >nul 2>&1
+cls
 if not exist "%FILETEMP%\mtkdriv.exe" (
+    echo Downloading Resources..
     powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/DriverInstall.exe' -OutFile '%FILETEMP%\mtkdriv.exe'" >nul 2>&1
+    cls
     goto Driverexist
 )else (
+echo Downloading Resources..
+timeout /t 1 >nul 
+cls
 goto Driverexist 
 )
 :Driverexist
@@ -440,10 +511,14 @@ if "%PROCESSOR_ARCHITECTURE%"=="AMD64" goto 64
 if not "%PROCESSOR_ARCHITEW6432%"=="" goto 64
 goto 32
 :64
+echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/daynix/UsbDk/releases/download/v1.00-22/UsbDk_1.0.22_x64.msi' -OutFile '%FILETEMP%\UsbDk.msi'" >nul 2>&1 
+cls
 goto z
 :32
+echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/daynix/UsbDk/releases/download/v1.00-22/UsbDk_1.0.22_x86.msi' -OutFile '%FILETEMP%\UsbDk.msi'" >nul 2>&1 
+cls
 goto z
 :z
 goto Driverexist1
@@ -451,9 +526,17 @@ goto Driverexist1
 goto Driverexist1 
 )
 :Driverexist1
+echo Downloading Resources.
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/cleanup.bat' -OutFile '%SCRIPTS%\cleanup.bat'" >nul 2>&1
+cls
+echo Downloading Resources..
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/drivinst.bat' -OutFile '%SCRIPTS%\drivinst.bat'" >nul 2>&1
+cls
+echo Downloading Resources...
 powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/flash.bat' -OutFile '%SCRIPTS%\flash.bat'" >nul 2>&1
+cls
+echo Downloading Resources.
+powershell.exe -NoLogo -NoProfile -Command "Invoke-WebRequest -Uri '%BASEURL%/settings.bat' -OutFile '%SCRIPTS%\settings.bat'" >nul 2>&1
 cls
 :testmd
 echo Done
@@ -471,64 +554,92 @@ echo                      T-Installer %VER%
 echo ===============================================================
 echo                         Options
 echo ===============================================================
-echo 1 Multi Android Kitchen Tool (For advanced Users and Developers)
+echo 1 Auto Timmkoo Custom Rom Flasher (For new users recommended)
 echo ===============================================================
-echo 2 Auto Porttool (For advanced Users amd Developers)
+echo 2 Scrypy (A Tool to mirror you screen from your modded Timmkoo to your Computer via usb)
 echo ===============================================================
-echo 3 Scrypy (A Tool to mirror you screen from your modded Timmkoo to your Computer via usb)
+echo 3 Settings
 echo ===============================================================
-echo 4 Auto Timmkoo Custom Rom Flasher (For new users recommended)
+echo 4 Clean temp files
 echo ===============================================================
-echo 5
+echo 5 Credits
 echo ===============================================================
-echo 6 Full 
+echo 6 Exit 
 echo ===============================================================
-echo 7 Exit 
-echo ===============================================================
-echo 8 Clean temp files
-echo ===============================================================
-echo 9 Credits
-echo ===============================================================
-echo 10 Exit 
-echo ===============================================================
+if exist "%expermimentalset%" (
+    echo                 Experimental Options (enabled)
+    echo ===============================================================
+    echo 7 Auto Porttool (For advanced Users amd Developers)
+    echo ===============================================================
+    echo 8 Multi Android Kitchen Tool (For advanced Users and Developers)
+    echo ===============================================================
+    echo 9 %NOCONFIG%
+    echo ===============================================================
+    echo 10 %NOCONFIG%
+    echo ===============================================================
+)
+
 SET /P M=Type one option then press ENTER:
 IF "%M%"=="1" (
     cls
-    CALL "%SCRIPTS%\kitchen.bat"
+    CALL "%SCRIPTS%\autoflash.bat"
     GOTO main
 ) ELSE IF "%M%"=="2" (
     cls
-    CALL "%SCRIPTS%\porttool.bat"
-    GOTO main
-) ELSE IF "%M%"=="3" (
-    cls
     CALL "%SCRIPTS%\scrypy.bat"
-    GOTO main
-) ELSE IF "%M%"=="4" (
-    cls
-    CALL "%SCRIPTS%\autoflash.bat"
-    GOTO main
-) ELSE IF "%M%"=="5" (
-    cls
-    CALL "%SCRIPTS%\service4.bat"
-    GOTO main
-) ELSE IF "%M%"=="6" (
-    cls
-    CALL "%SCRIPTS%\service5.bat"
     GOTO main
 ) ELSE IF "%M%"=="7" (
     cls
-    CALL "%SCRIPTS%\service6.bat"
+    if not exist "%expermimentalset%" (
+        color 4
+        echo Action Disabled by Developer . Enable it in Settings
+        timeout /t 1 >nul
+        GOTO main)else (
+    CALL "%SCRIPTS%\porttool.bat")
     GOTO main
 ) ELSE IF "%M%"=="8" (
     cls
+        if not exist "%expermimentalset%" (
+        color 4
+        echo Action Disabled by Developer . Enable it in Settings
+        timeout /t 1 >nul
+        GOTO main)else (
+    CALL "%SCRIPTS%\kitchen.bat"
+    GOTO main
+    )
+) ELSE IF "%M%"=="9" (
+    cls
+        if not exist "%expermimentalset%" (
+        color 4
+        echo Action Disabled by Developer . Enable it in Settings
+        timeout /t 1 >nul
+        GOTO main)else (
+    CALL "%SCRIPTS%\service4.bat"
+    GOTO main
+    )
+) ELSE IF "%M%"=="10" (
+    cls
+        if not exist "%expermimentalset%" (
+        color 4
+        echo Action Disabled by Developer . Enable it in Settings
+        timeout /t 1 >nul
+        GOTO main)else (
+    CALL "%SCRIPTS%\service5.bat"
+    GOTO main
+    )
+) ELSE IF "%M%"=="3" (
+    cls
+    CALL "%SCRIPTS%\settings.bat"
+    GOTO main
+) ELSE IF "%M%"=="4" (
+    cls
     CALL "%SCRIPTS%\cleanup.bat"
     GOTO main
-) ELSE IF "%M%"=="9" (
+) ELSE IF "%M%"=="5" (
     cls
     CALL "%SCRIPTS%\credits.bat"
     GOTO main
-) ELSE IF "%M%"=="10" (
+) ELSE IF "%M%"=="6" (
     EXIT
 ) ELSE (
     cls
