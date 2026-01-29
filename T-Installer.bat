@@ -369,7 +369,7 @@ echo ====================================
 timeout /t 5 >nul
 :: Disclaimer
 cls
-if not exist "%disclaimercheck%" ( powershell.exe -c "mkdir '%disclaimercheckdir%'" >nul 2>&1 ) 
+if not exist "%disclaimercheck%" ( powershell.exe -c "mkdir %SAVEDATA%" >nul 2>&1 ) 
 if exist "%disclaimercheck%" ( goto bootup ) 
     color 4
 
@@ -385,7 +385,7 @@ if exist "%disclaimercheck%" ( goto bootup )
     )
 
     :: Save acceptance
-    echo Saved in %disclaimercheckdir%
+    echo Saved in %SAVEDATA%
     echo Accepted the Disclaimer>"%disclaimercheck%"
     timeout /t 2 >nul
 
