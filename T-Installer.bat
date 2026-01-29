@@ -175,7 +175,7 @@ if /i "%~2"=="updatesucess" (
         exit /b
     ) else (
     echo Sucessfully updated from %~3 to the latest Version
-    set "firstrun=y"
+    set "firstrun=1"
     timeout /t 2 >nul
     cls
     echo Skipping update check ...
@@ -246,7 +246,7 @@ setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
 :firstrunafterupdate
-set "VER=2.2"
+set "VER=2.3"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -277,6 +277,7 @@ set "SAVEDATA=%appdata%\T-Installer"
 set "disclaimercheck=%SAVEDATA%\Accept.txt"
 set "expermimentalset=%SAVEDATA%\additionalbetaoptions.txt"
 set "NOCONFIG=Not yet configured"
+set "rubinary=/system/media/primary/misc/bin/ru"
 :: Checking for Flags
 if "%firstrun%"=="1" (
     cls
