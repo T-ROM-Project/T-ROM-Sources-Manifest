@@ -178,7 +178,7 @@ if /i "%~2"=="updatesucess" (
     timeout /t 2 >nul
     cls
     echo Skipping update check ...
-    goto updatefinished
+    goto updatecheckpass
     )
 )
 
@@ -205,7 +205,7 @@ if /i "%~2"=="update" (
     del "%VERCHECK%"
     del "%CHANGELOG%"
     set scriptPath=%~dp0
-    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess %VER%"
+    start cmd.exe /c "powershell -WindowStyle Minimized -Command "Start-Sleep -Seconds 0" && @echo off && echo Rebooting to the updating version ... && timeout /t 3 >nul && start %scriptPath%T-Installer.bat -c updatesucess %VER%"
     exit
 )
 
@@ -244,7 +244,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
-set "VER=2.1"
+set "VER=2.2"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
 set "RES=%ROOT%\res"
@@ -378,9 +378,9 @@ if exist "%disclaimercheck%" ( goto bootup )
     )
 
     :: Save acceptance
-    echo SAVED
-    timeout /t 5 >nul
+    echo Saved in %disclaimercheckdir%
     echo Accepted the Disclaimer>"%disclaimercheck%"
+    timeout /t 2 >nul
 
 cls
 :bootup
