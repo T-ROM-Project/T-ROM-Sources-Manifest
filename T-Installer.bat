@@ -273,7 +273,7 @@ set  "RP=%FILETEMP%\RP.hta"
 set "MTKCLIOUT=%MTKCLI%\mtkclient-main\output"
 set "VERCHECK=%ROOT%\versioncheck.txt"
 set "CHANGELOG=%ROOT%\changelog.txt"
-set "SAVEDATA=%appdata%\T-Installer"
+set "SAVEDATA=%ROOT%\CONFIGS"
 set "disclaimercheck=%SAVEDATA%\Accept.txt"
 set "expermimentalset=%SAVEDATA%\additionalbetaoptions.txt"
 set "NOCONFIG=Not yet configured"
@@ -310,7 +310,6 @@ CALL "%SCRIPTS%\autoflash.bat"
 )
 
 ::Check Done...
-
 :: Update Check not when first run
 :continue
 if not exist "%ROOT%" (

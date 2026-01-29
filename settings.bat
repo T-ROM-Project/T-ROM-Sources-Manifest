@@ -9,12 +9,9 @@ echo                      T-Installer %VER%
 echo ===============================================================
 echo                         Settings
 echo ===============================================================
-echo %NOCONFIG%
-echo ===============================================================
-echo                       Experimental
-echo ===============================================================
 echo 1 Enable experimental Choices (Not Recommended for Normal Users)
 echo 2 Disable experimental Choices 
+echo ===============================================================
 SET /P S=Type one option then press ENTER:
 IF "%M%"=="1" (
     echo SAVED
