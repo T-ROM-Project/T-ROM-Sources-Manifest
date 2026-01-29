@@ -175,10 +175,12 @@ if /i "%~2"=="updatesucess" (
         exit /b
     ) else (
     echo Sucessfully updated from %~3 to the latest Version
+    set "firstrun=y"
     timeout /t 2 >nul
     cls
     echo Skipping update check ...
-    goto updatecheckpass
+    timeout /t 2 >nul
+    goto firstrunafterupdate
     )
 )
 
@@ -210,7 +212,6 @@ if /i "%~2"=="update" (
 )
 
 
-:updatefinished
 :parampass
 :: Requesting admin rights
 :-------------------------------------
@@ -244,6 +245,7 @@ powershell -WindowStyle Maximized -Command "Start-Sleep -Seconds 1"
 setlocal
 setlocal EnableDelayedExpansion
 :: Version of the script
+:firstrunafterupdate
 set "VER=2.2"
 :: Filepaths (If anyone wants to change it)
 set "ROOT=%USERPROFILE%\Desktop\trom"
@@ -276,6 +278,11 @@ set "disclaimercheck=%SAVEDATA%\Accept.txt"
 set "expermimentalset=%SAVEDATA%\additionalbetaoptions.txt"
 set "NOCONFIG=Not yet configured"
 :: Checking for Flags
+if "%firstrun%"=="1" (
+    cls
+    goto updatecheckpass
+)
+
 if not exist "%ROOT%\!deletemewhenrel.txt" (
     cls
     goto check2e
